@@ -1,8 +1,7 @@
-// server/index.js
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const cors = require('cors');
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import cors from 'cors';
 
 const app = express();
 app.use(cors());
@@ -38,7 +37,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    for (let roomId in rooms) {
+    for (const roomId in rooms) {
       rooms[roomId] = rooms[roomId].filter(p => p.id !== socket.id);
       io.to(roomId).emit('playerList', rooms[roomId]);
     }
